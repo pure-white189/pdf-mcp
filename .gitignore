@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+.venv/
+
+# Environment variables
+.env
+
+# Pytest
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Project files (contains API config / internal docs)
+LEARNING.md
+pdf_mcp_spec.md
+
+# Test PDFs (course materials, large files)
+tests/sample_pdfs/*.pdf
