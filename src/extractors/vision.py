@@ -57,7 +57,7 @@ def extract_text_from_image(data):
 
     try:
         response = client.messages.create(
-            model=env["ANTHROPIC_DEFAULT_HAIKU_MODEL"],
+            model=env.get("ANTHROPIC_VISION_MODEL", env["ANTHROPIC_DEFAULT_HAIKU_MODEL"]),
             max_tokens=4096,
             messages=[
                 {

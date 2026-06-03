@@ -46,10 +46,13 @@ Add to `~/.claude/settings.json`:
   "env": {
     "ANTHROPIC_BASE_URL": "https://your-api-endpoint/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "your-api-key",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "your-model-name"
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "your-model-name",
+    "ANTHROPIC_VISION_MODEL": "your-vision-model"
   }
 }
 ```
+
+> `ANTHROPIC_VISION_MODEL` is optional — if not set, it falls back to `ANTHROPIC_DEFAULT_HAIKU_MODEL`.
 
 Add to `~/.claude/.mcp.json`:
 
@@ -77,7 +80,11 @@ The server starts automatically when Claude Code launches.
 | `pdf_detect_type(pdf_path)` | Detect PDF type without extracting content |
 | `pdf_extract_images(pdf_path, page)` | Extract and describe images on a page |
 
-All paths must be WSL format: `/mnt/g/claude code产品/...`
+All paths support both formats:
+- Windows: `G:\claude code产品\example.pdf`
+- WSL: `/mnt/g/claude code产品/example.pdf`
+
+Windows paths are automatically converted to WSL format.
 
 ## Running Tests
 
@@ -96,7 +103,7 @@ pdf-mcp/
 │   ├── server.py           # MCP server entry point
 │   ├── detector.py         # PDF page type detection
 │   ├── formatter.py        # Markdown output + parallel extraction
-│   ├── utils.py            # Shared helpers (render_page_to_image)
+│   ├── utils.py            # Shared helpers (render_page_to_image, normalize_path)
 │   └── extractors/
 │       ├── text.py         # pdfplumber text extraction
 │       ├── vision.py       # pymupdf + Anthropic vision API

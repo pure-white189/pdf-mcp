@@ -4,6 +4,7 @@ import fitz
 from formatter import markdown_format
 from detector import detect_pdf_type
 from extractors.vision import extract_text_from_image, bytes_to_base64_str
+from utils import normalize_path
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("pdf-reader")
@@ -22,8 +23,9 @@ def _validate_pdf_path(pdf_path: str) -> str | None:
 def pdf_extract(pdf_path: str) -> str:
     """Extract all text content from a PDF file as Markdown.
     Use this to read the full content of a PDF document.
-    The pdf_path should be a Linux/WSL path (e.g. /mnt/c/Users/...).
+    The pdf_path can be a Windows path (e.g. G:\\folder\\file.pdf) or Linux path (e.g. /mnt/g/folder/file.pdf).
     """
+    pdf_path = normalize_path(pdf_path)
     err = _validate_pdf_path(pdf_path)
     if err:
         return err
@@ -38,8 +40,9 @@ def pdf_extract_pages(pdf_path: str, start_page: int, end_page: int) -> str:
     """Extract text content from a specific page range of a PDF file.
     Pages are 1-indexed (first page = 1).
     Use this when you only need certain pages instead of the whole document.
-    The pdf_path should be a Linux/WSL path (e.g. /mnt/c/Users/...).
+    The pdf_path can be a Windows path (e.g. G:\\folder\\file.pdf) or Linux path (e.g. /mnt/g/folder/file.pdf).
     """
+    pdf_path = normalize_path(pdf_path)
     err = _validate_pdf_path(pdf_path)
     if err:
         return err
@@ -58,8 +61,9 @@ def pdf_detect_type(pdf_path: str) -> str:
     """Detect the type of a PDF without extracting content.
     Returns the overall document type and per-page type breakdown.
     Useful for checking if a PDF is text-based, scanned, or mixed before extraction.
-    The pdf_path should be a Linux/WSL path (e.g. /mnt/c/Users/...).
+    The pdf_path can be a Windows path (e.g. G:\\folder\\file.pdf) or Linux path (e.g. /mnt/g/folder/file.pdf).
     """
+    pdf_path = normalize_path(pdf_path)
     err = _validate_pdf_path(pdf_path)
     if err:
         return err
@@ -81,8 +85,9 @@ def pdf_extract_images(pdf_path: str, page_number: int) -> str:
     """Extract and describe all embedded images on a specific PDF page.
     Pages are 1-indexed (first page = 1).
     Uses vision AI to describe what each image shows.
-    The pdf_path should be a Linux/WSL path (e.g. /mnt/c/Users/...).
+    The pdf_path can be a Windows path (e.g. G:\\folder\\file.pdf) or Linux path (e.g. /mnt/g/folder/file.pdf).
     """
+    pdf_path = normalize_path(pdf_path)
     err = _validate_pdf_path(pdf_path)
     if err:
         return err
